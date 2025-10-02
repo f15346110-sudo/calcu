@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kalkulator Matematika</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-     body {
+<title>Kalkulator Matematika</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
         margin: 0;
         padding: 0;
         font-family: Consolas, monospace;
@@ -16,30 +16,34 @@
         color: #fff;
         overflow-x: hidden;
         min-height: 100vh;
-     }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-     @keyframes slideBackground {
+    @keyframes slideBackground {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
-     }
+    }
 
-     @keyframes pulse {
+    @keyframes pulse {
         0% { transform: scale(1); }
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
-     }
+    }
 
-     @keyframes glow {
+    @keyframes glow {
         0% { box-shadow: 0 0 5px #5ab4f8; }
         50% { box-shadow: 0 0 20px #5ab4f8, 0 0 30px #5ab4f8; }
         100% { box-shadow: 0 0 5px #5ab4f8; }
-     }
+    }
 
-     .calculator {
+    .calculator {
         width: 85%;
-        max-width: 320px;
-        margin: 60px auto 15px auto;
+        max-width: 360px;
+        margin: 0 auto 15px auto;
         border: 2px solid #5ab4f8;
         border-radius: 12px;
         padding: 12px;
@@ -48,18 +52,18 @@
         text-align: center;
         animation: glow 3s infinite alternate;
         transition: transform 0.3s ease;
-     }
+    }
 
-     .calculator:hover {
+    .calculator:hover {
         transform: translateY(-5px);
-     }
+    }
 
-     .display-container {
+    .display-container {
         position: relative;
         margin-bottom: 12px;
-     }
+    }
 
-     .display {
+    .display {
         width: 95%;
         height: 50px;
         text-align: right;
@@ -72,14 +76,14 @@
         color: #5ab4f8;
         box-shadow: inset 0 0 10px #5ab4f8;
         transition: all 0.3s ease;
-     }
+    }
 
-     .display:focus {
+    .display:focus {
         outline: none;
         box-shadow: inset 0 0 15px #5ab4f8, 0 0 10px #5ab4f8;
-     }
+    }
 
-     #conversion {
+    #conversion {
         text-align: right;
         font-size: 14px;
         margin-bottom: 12px;
@@ -87,16 +91,16 @@
         color: #9cf;
         min-height: 20px;
         transition: all 0.5s ease;
-     }
+    }
 
-     .buttons {
+    .buttons {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 8px;
-     }
+    }
 
-     .button {
-        padding: 12px;
+    .button {
+        padding: 10px;
         text-align: center;
         font-size: 14px;
         cursor: pointer;
@@ -113,9 +117,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-     }
+    }
 
-     .button:before {
+    .button:before {
         content: "";
         position: absolute;
         top: 50%;
@@ -126,34 +130,34 @@
         background: rgba(90, 180, 248, 0.5);
         transform: translate(-50%, -50%);
         transition: width 0.6s, height 0.6s;
-     }
+    }
 
-     .button:hover:before {
+    .button:hover:before {
         width: 300px;
         height: 300px;
-     }
+    }
 
-     .button:hover {
+    .button:hover {
         background-color: #5ab4f8;
         color: black;
         box-shadow: 0 0 15px #5ab4f8;
         transform: translateY(-3px);
-     }
+    }
 
-     .button:active {
+    .button:active {
         transform: scale(0.95);
         background-color: #3498db;
         color: black;
-     }
+    }
 
-     .button span {
+    .button span {
         display: block;
         font-size: 14px;
         color: #a3d8ff;
         margin-bottom: 2px;
-     }
+    }
 
-     .history {
+    .history {
         width: 85%;
         max-width: 320px;
         margin: 10px auto;
@@ -167,34 +171,34 @@
         color: #9cf;
         box-shadow: 0 0 15px #5ab4f8;
         transition: all 0.3s ease;
-     }
+    }
 
-     .history:hover {
+    .history:hover {
         box-shadow: 0 0 25px #5ab4f8;
-     }
+    }
 
-     .history h3 {
+    .history h3 {
         margin-top: 0;
         font-size: 14px;
         text-align: center;
         color: #5ab4f8;
         padding-bottom: 8px;
         border-bottom: 1px dashed #5ab4f8;
-     }
+    }
 
-     .history p {
+    .history p {
         margin: 5px 0;
         border-bottom: 1px dashed #5ab4f8;
         padding-bottom: 3px;
         transition: all 0.3s ease;
-     }
+    }
 
-     .history p:hover {
+    .history p:hover {
         background-color: rgba(90, 180, 248, 0.1);
         padding-left: 5px;
-     }
+    }
 
-     .clear-history {
+    .clear-history {
         margin-top: 8px;
         padding: 8px;
         background-color: #1c1f2b;
@@ -206,14 +210,14 @@
         font-weight: bold;
         width: 100%;
         font-size: 12px;
-     }
+    }
 
-     .clear-history:hover {
+    .clear-history:hover {
         background-color: #5ab4f8;
         color: black;
-     }
+    }
 
-     .audio-controls {
+    .audio-controls {
         position: fixed;
         bottom: 15px;
         right: 15px;
@@ -221,9 +225,9 @@
         flex-direction: column;
         gap: 8px;
         z-index: 100;
-     }
+    }
 
-     .audio-btn {
+    .audio-btn {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -236,21 +240,21 @@
         cursor: pointer;
         transition: all 0.3s ease;
         font-size: 18px;
-     }
+    }
 
-     .audio-btn:hover {
+    .audio-btn:hover {
         background: #5ab4f8;
         color: black;
         transform: scale(1.1);
-     }
+    }
 
-     .audio-btn.active {
+    .audio-btn.active {
         background: #5ab4f8;
         color: black;
         animation: pulse 2s infinite;
-     }
+    }
 
-     .notification {
+    .notification {
         position: fixed;
         top: 15px;
         right: 15px;
@@ -265,24 +269,24 @@
         z-index: 100;
         max-width: 280px;
         font-size: 14px;
-     }
+    }
 
-     .notification.show {
+    .notification.show {
         transform: translateX(0);
-     }
+    }
 
-     .notification h4 {
+    .notification h4 {
         margin: 0 0 8px 0;
         color: #5ab4f8;
         font-size: 16px;
-     }
+    }
 
-     .notification p {
+    .notification p {
         margin: 0;
         font-size: 12px;
-     }
+    }
 
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
         body {
             background-attachment: scroll;
         }
@@ -293,7 +297,7 @@
         }
         
         .calculator {
-            margin-top: 50px;
+            margin: 0 auto 15px auto;
             padding: 10px;
         }
         
@@ -357,13 +361,13 @@
         .notification p {
             font-size: 10px;
         }
-     }
-     
-     @media (max-width: 480px) {
+    }
+    
+    @media (max-width: 480px) {
         .calculator {
             width: 65%;
             padding: 8px;
-            margin-top: 40px;
+            margin: 0 auto 15px auto;
             max-width: 240px;
         }
         
@@ -432,12 +436,13 @@
         .notification p {
             font-size: 9px;
         }
-     }
-     
-     @media (max-width: 360px) {
+    }
+    
+    @media (max-width: 360px) {
         .calculator {
             width: 60%;
             max-width: 200px;
+            margin: 0 auto 15px auto;
         }
         
         .button {
@@ -462,66 +467,66 @@
             width: 60%;
             max-width: 200px;
         }
-     }
-  </style>
+    }
+</style>
 </head>
 <body>
-  <audio id="musik" autoplay loop>
+<audio id="musik" autoplay loop>
     <source src="yours.mp3" type="audio/mpeg">
-  </audio>
+</audio>
 
-  <audio id="bipSound">
+<audio id="bipSound">
     <source src="uiclick.mp3" type="audio/mpeg">
-  </audio>
+</audio>
 
-  <audio id="siuSound">
+<audio id="siuSound">
     <source src="siu.mp3" type="audio/mpeg">
-  </audio>
+</audio>
 
-  <div class="notification" id="notification">
+<div class="notification" id="notification">
     <h4>Kalkulator Siap!</h4>
     <p>Klik tombol untuk memulai perhitungan</p>
-  </div>
+</div>
 
-  <div class="calculator">
+<div class="calculator">
     <div class="display-container">
-      <input type="text" class="display" id="display" disabled>
+    <input type="text" class="display" id="display" disabled>
     </div>
     <div id="conversion"></div>
     <div class="buttons">
-      <div class="button" onclick="appendToDisplay('7','tujuh')"><span>7</span>tujuh</div>
-      <div class="button" onclick="appendToDisplay('8','delapan')"><span>8</span>delapan</div>
-      <div class="button" onclick="appendToDisplay('9','sembilan')"><span>9</span>sembilan</div>
-      <div class="button" onclick="appendToDisplay('/','bagi')">÷</div>
-      <div class="button" onclick="appendToDisplay('4','empat')"><span>4</span>empat</div>
-      <div class="button" onclick="appendToDisplay('5','lima')"><span>5</span>lima</div>
-      <div class="button" onclick="appendToDisplay('6','enam')"><span>6</span>enam</div>
-      <div class="button" onclick="appendToDisplay('*','kali')">×</div>
-      <div class="button" onclick="appendToDisplay('1','satu')"><span>1</span>satu</div>
-      <div class="button" onclick="appendToDisplay('2','dua')"><span>2</span>dua</div>
-      <div class="button" onclick="appendToDisplay('3','tiga')"><span>3</span>tiga</div>
-      <div class="button" onclick="appendToDisplay('-','kurang')">-</div>
-      <div class="button" onclick="appendToDisplay('0','nol')"><span>0</span>nol</div>
-      <div class="button" onclick="appendToDisplay('.','koma')">,</div>
-      <div class="button" onclick="calculate()">=</div>
-      <div class="button" onclick="appendToDisplay('+','tambah')">+</div>
-      <div class="button" onclick="clearDisplay()" style="grid-column: span 4;">Hapus</div>
+    <div class="button" onclick="appendToDisplay('7','tujuh')"><span>7</span>tujuh</div>
+    <div class="button" onclick="appendToDisplay('8','delapan')"><span>8</span>delapan</div>
+    <div class="button" onclick="appendToDisplay('9','sembilan')"><span>9</span>sembilan</div>
+    <div class="button" onclick="appendToDisplay('/','bagi')">÷</div>
+    <div class="button" onclick="appendToDisplay('4','empat')"><span>4</span>empat</div>
+    <div class="button" onclick="appendToDisplay('5','lima')"><span>5</span>lima</div>
+    <div class="button" onclick="appendToDisplay('6','enam')"><span>6</span>enam</div>
+    <div class="button" onclick="appendToDisplay('*','kali')">×</div>
+    <div class="button" onclick="appendToDisplay('1','satu')"><span>1</span>satu</div>
+    <div class="button" onclick="appendToDisplay('2','dua')"><span>2</span>dua</div>
+    <div class="button" onclick="appendToDisplay('3','tiga')"><span>3</span>tiga</div>
+    <div class="button" onclick="appendToDisplay('-','kurang')">-</div>
+    <div class="button" onclick="appendToDisplay('0','nol')"><span>0</span>nol</div>
+    <div class="button" onclick="appendToDisplay('.','koma')">,</div>
+    <div class="button" onclick="calculate()">=</div>
+    <div class="button" onclick="appendToDisplay('+','tambah')">+</div>
+    <div class="button" onclick="clearDisplay()" style="grid-column: span 4;">Hapus</div>
     </div>
-  </div>
+</div>
 
-  <div class="history" id="historyBox">
+<div class="history" id="historyBox">
     <h3>Riwayat Perhitungan</h3>
     <div id="historyList"></div>
     <button class="clear-history" onclick="clearHistory()">Hapus Riwayat</button>
-  </div>
+</div>
 
-  <div class="audio-controls">
+<div class="audio-controls">
     <div class="audio-btn" id="voiceBtn" onclick="toggleVoice()">🔊</div>
     <div class="audio-btn" onclick="toggleMusic()" id="musicToggle">🔊</div>
     <div class="audio-btn" onclick="toggleSound()" id="soundToggle">🔊</div>
-  </div>
+</div>
 
-  <script>
+<script>
     // Inisialisasi variabel global
     const display = document.getElementById('display');
     const bipSound = document.getElementById('bipSound');
@@ -892,6 +897,6 @@
             console.error("Music init error:", e);
         }
     };
-  </script>
+</script>
 </body>
 </html>
