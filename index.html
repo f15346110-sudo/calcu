@@ -244,6 +244,12 @@
         transform: scale(1.1);
      }
 
+     .audio-btn.active {
+        background: #5ab4f8;
+        color: black;
+        animation: pulse 2s infinite;
+     }
+
      .notification {
         position: fixed;
         top: 15px;
@@ -274,24 +280,6 @@
      .notification p {
         margin: 0;
         font-size: 12px;
-     }
-
-     .voice-indicator {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        border: 1px solid #5ab4f8;
-        z-index: 100;
-        transition: all 0.3s ease;
-     }
-
-     .voice-indicator.active {
-        background: #5ab4f8;
-        box-shadow: 0 0 10px #5ab4f8;
      }
 
      @media (max-width: 768px) {
@@ -479,7 +467,7 @@
 </head>
 <body>
   <audio id="musik" autoplay loop>
-    <source src="pica2.mp3" type="audio/mpeg">
+    <source src="yours.mp3" type="audio/mpeg">
   </audio>
 
   <audio id="bipSound">
@@ -494,8 +482,6 @@
     <h4>Kalkulator Siap!</h4>
     <p>Klik tombol untuk memulai perhitungan</p>
   </div>
-
-  <div class="voice-indicator" id="voiceIndicator"></div>
 
   <div class="calculator">
     <div class="display-container">
@@ -530,6 +516,7 @@
   </div>
 
   <div class="audio-controls">
+    <div class="audio-btn" id="voiceBtn" onclick="toggleVoice()">🔊</div>
     <div class="audio-btn" onclick="toggleMusic()" id="musicToggle">🔊</div>
     <div class="audio-btn" onclick="toggleSound()" id="soundToggle">🔊</div>
   </div>
@@ -544,7 +531,7 @@
     const siuSound = document.getElementById("siuSound");
     const musik = document.getElementById("musik");
     const notification = document.getElementById('notification');
-    const voiceIndicator = document.getElementById('voiceIndicator');
+    const voiceBtn = document.getElementById('voiceBtn');
     
     // Variabel untuk kontrol audio
     let musicEnabled = true;
@@ -552,7 +539,6 @@
     let voiceEnabled = false;
     let firstInteraction = true;
     let speechSynthesisSupported = false;
-    let lastTapTime = 0;
     
     // Cek dukungan browser untuk Speech Synthesis
     if ('speechSynthesis' in window) {
@@ -788,7 +774,7 @@
         }
     }
     
-    // Fungsi untuk toggle suara AI (tanpa tombol UI)
+    // Fungsi untuk toggle suara AI
     function toggleVoice() {
         if (!speechSynthesisSupported) {
             showNotification("Tidak Didukung", "Browser Anda tidak mendukung fitur suara AI");
@@ -798,7 +784,8 @@
         voiceEnabled = !voiceEnabled;
         
         if (voiceEnabled) {
-            voiceIndicator.classList.add("active");
+            voiceBtn.classList.add("active");
+            voiceBtn.textContent = "🔇";
             showNotification("Suara AI Aktif", "Voice assistant telah diaktifkan");
             
             // Ucapkan pesan selamat datang
@@ -806,7 +793,8 @@
                 speak("Halo, saya siap membantu anda menghitung");
             }, 500);
         } else {
-            voiceIndicator.classList.remove("active");
+            voiceBtn.classList.remove("active");
+            voiceBtn.textContent = "🔊";
             showNotification("Suara AI Nonaktif", "Voice assistant telah dinonaktifkan");
             
             // Hentikan semua ucapan yang sedang berjalan
@@ -877,20 +865,6 @@
         
         return numberTexts[num] || num;
     }
-    
-    // Fungsi untuk menangani double tap di mobile
-    document.addEventListener('touchstart', function(event) {
-        const currentTime = new Date().getTime();
-        const tapLength = currentTime - lastTapTime;
-        
-        if (tapLength < 500 && tapLength > 0) {
-            // Double tap detected
-            toggleVoice();
-            event.preventDefault();
-        }
-        
-        lastTapTime = currentTime;
-    });
     
     // Inisialisasi kalkulator
     window.onload = function() {
